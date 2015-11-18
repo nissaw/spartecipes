@@ -38,6 +38,24 @@ exports.findUser = function(user, callback){
 
 
 exports.addUser = function(data, callback){
+    // ============
+    // Params
+    // ============
+    // googleInfo
+    // - id
+    // - token
+    // - email
+    // - name
+    //
+    // new user -> google_id, name, email
+    //=============
+    // localInfo
+    // -username
+    // -email
+    // -password
+    // new user -> username, email, passord
+    //===============
+
   var user = new User({
 
    local:            {
@@ -70,6 +88,11 @@ exports.addUser = function(data, callback){
 };
 
 exports.addRecipe = function(data, callback){
+   // ============
+    // Params
+    // ============
+
+
  findUser(data.user, function(profile){
     var recipe = new Recipe({
       name: data.name,// access recipe name; 
