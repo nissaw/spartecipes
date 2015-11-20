@@ -33,6 +33,7 @@ $(document).ready(function() {
     player = new YT.Player('video-big', {
       videoId: 'Uj49PA8-L1E',
       autoplay: 1,
+      mute: true,
       controls: 0,
       enablejsapi: 1,
       end: 136,

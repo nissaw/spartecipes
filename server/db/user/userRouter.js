@@ -9,15 +9,24 @@ var jwt = require('jwt-simple');
  * All Passport Strategies are in server/config/passport.js
  */
 module.exports = function(app, passport) {
+  app.route('/') // express syntax to filter all requests
+    .post(function(req, res, next){
+      console.log(req, res);
+      next();
+    });
+
 
   app.route('/recipes')
     .post(function(req, res, next) {
+      console.log(req, res);
       UserController.updateShoppingList({
         user: req.body.user,
-        recipe: req.body.list
+        list: req.body.list
       }, function(err, res) {
         if (err) {
-          console.error('Unable to update Shopping List');
+          console.error('Unable to update Shopping List: userRouter.js');
+        } else {
+          res.send('Shopping List updated: userRouter.js');
         }
       });
     });

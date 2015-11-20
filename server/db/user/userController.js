@@ -19,7 +19,7 @@ exports.getAllUsers = function(callback){
 //finds a specific user profile
 exports.findUser = function(user, callback){
   var query =  {};
-  if ( google.id ){
+  if ( user.google.id ){
     query = { 'google.id': user.goggle.id };
   } else {
     query = { 'local.email':  user.local.email };
@@ -38,23 +38,6 @@ exports.findUser = function(user, callback){
 
 
 exports.addUser = function(data, callback){
-    // ============
-    // Params
-    // ============
-    // googleInfo
-    // - id
-    // - token
-    // - email
-    // - name
-    //
-    // new user -> google_id, name, email
-    //=============
-    // localInfo
-    // -username
-    // -email
-    // -password
-    // new user -> username, email, passord
-    //===============
 
   var user = new User({
 
@@ -88,34 +71,24 @@ exports.addUser = function(data, callback){
 };
 
 exports.updateShoppingList = function(data, callback){
-   // ============
-    // Params
-    // ============
-    // 
-    // - data
-    //    -user
-    //      -info
-    //    -recipe
-    //      - all recipe info?
-    // - 
-    // - 
-    //
-    // 
-    //=============
 
- findUser(data.user, function(profile){
-    var recipe = new Recipe({
-      title: data.recipe.title,
-      href: data.recipe.WebURL, 
-      ingredients: data.recipe.Ingredients,
-      imageURL: data.recipe.ImageURL,
-      body: data.recipe
-    });
-     User.update({'local.email' : profile.local.email}, {$set: {'profile.shoppingList': data.list } });
-    // $push the recipe to their shopping list
-    // User.update({'local.email' : profile.local.email}, {$push: {'shoppingList': recipe} });
+  exports.findUser(data.user, function(profile){ //error checking if (profile) function(){}
+    User.update({'local.email' : profile.local.email}, {$set: {'profile.shoppingList': data.list } });
+  });
+
+  User.save(function(err){
+    if (err){
+      console.error(err, 'Error on save!');
+      return;
+    } else {
+      console.log('Shopping List Saved to Database');
+      callback(null, profile);
+    }
+   
   });
 };
+
+
 
 exports.removeRecipe = function(data, callback){
   findUser(data.user, function(profile){

@@ -42,6 +42,7 @@ angular.module('recipes')
       Auth.login($scope.user)
         .then(function(resp) {
           if (resp.data.token) {
+            $rootScope.user = resp.data.user;
             $window.localStorage.setItem('spartanShield', resp.data.token);
             $scope.close();
           } else {

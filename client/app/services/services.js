@@ -33,10 +33,24 @@ angular.module('recipes.services', [])
 
 })
 
-.factory('ShoppingList', function() {
+.factory('ShoppingList', function($http, $rootScope) {
   var list = [];
   var ingredientList = {};
+/////
 
+   var saveList = function (list) {
+    console.log("saveList invoked: services.js", list);
+    return $http({
+      method: 'POST',
+      url: '/api/users/recipes',
+      data: {user: $rootScope.user, list: list }
+    })
+    .then(function (resp) {
+      console.log(resp);
+    });
+  };
+
+//////
   var addFrac = function(frac1, frac2){
     console.log(Number(frac1));
     console.log(Number(frac1) + Number(frac2));
@@ -97,6 +111,7 @@ angular.module('recipes.services', [])
   };
 
   return {
+    saveList: saveList,
     recipeInList: recipeInList,
     list: list,
     removeFromList: removeFromList,

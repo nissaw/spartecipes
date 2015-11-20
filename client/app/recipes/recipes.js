@@ -9,6 +9,14 @@ angular.module('recipes.recipes', [])
   $scope.data = {};
   angular.extend($scope, Search, ShoppingList);
 
+  ///////
+  $scope.testList = function(){
+    ShoppingList.saveList(['apple', 'beef', 'chicken']);
+    console.log("testList called: HeaderController recipes.js");
+  };
+  ///////
+
+
   $scope.changeState = function (state) {
     $state.go(state);
   };
